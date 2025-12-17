@@ -1,67 +1,128 @@
-package threes.model;
+package threes.ui; 
+
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+import threes.model.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import threes.model.Direction;
+import threes.model.GameModel;
+import threes.model.MoveResult;
+
 
 /**
  *
  * @author Titouan HETMANIAK
  */
 public class ThreesFrame extends javax.swing.JFrame {
+    private GameModel model;
+    private JButton[][] cells;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ThreesFrame.class.getName());
     
     
-    private void initGame() {  
+     public ThreesFrame() {
+        initComponents();   // NetBeans
+        initGame();
+        initGrid();
+        initKeyBindings();
+        updateView();
+    }   
+
+         private void initGame() {
         model = new GameModel();
         model.reset();
         cells = new JButton[4][4];
     }
-    
-       
-    private void initComponents() {
+         
+         private void resetGame() {
+        model.reset();
+        infoLabel.setText("Nouvelle partie");
+        updateView();
+    }
+          private void initGrid() {
+        gridPanel.removeAll();
 
-        gridPanel = new JPanel();
-        movesLabel = new JLabel("Coups : 0");
-        infoLabel = new JLabel("Utilise les flèches");
-        resetButton = new JButton("Recommencer");
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 4; c++) {
+                JButton btn = new JButton();
+                btn.setEnabled(false);
+                btn.setFont(new Font("Arial", Font.BOLD, 22));
+                btn.setPreferredSize(new Dimension(80, 80));
+                cells[r][c] = btn;
+                gridPanel.add(btn);
+            }
+        }
+    }
+           private void initKeyBindings() {
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setTitle("THREES - Swing");
-        setResizable(false);
+        JComponent root = getRootPane();
+        InputMap im = root.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = root.getActionMap();
 
-        gridPanel.setLayout(new GridLayout(4, 4, 8, 8));
-        gridPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        im.put(KeyStroke.getKeyStroke("UP"), "up");
+        im.put(KeyStroke.getKeyStroke("DOWN"), "down");
+        im.put(KeyStroke.getKeyStroke("LEFT"), "left");
+        im.put(KeyStroke.getKeyStroke("RIGHT"), "right");
 
-        resetButton.addActionListener(e -> resetGame());
+        am.put("up", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                play(Direction.UP);
+            }
+        });
 
-        JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.add(movesLabel, BorderLayout.WEST);
-        topPanel.add(infoLabel, BorderLayout.CENTER);
-        topPanel.add(resetButton, BorderLayout.EAST);
+        am.put("down", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                play(Direction.DOWN);
+            }
+        });
 
-        add(topPanel, BorderLayout.NORTH);
-        add(gridPanel, BorderLayout.CENTER);
+        am.put("left", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                play(Direction.LEFT);
+            }
+        });
 
-        pack();
-        setLocationRelativeTo(null);
+        am.put("right", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                play(Direction.RIGHT);
+            }
+        });
     }
 
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ThreesFrame.class.getName());
+    // ===== JOUER =====
+    private void play(Direction dir) {
 
-    /**
-     * Creates new form ThreesFrame
-     */
-    public ThreesFrame() {
-        initComponents();      // NetBeans
-        initGame();            // logique
-        initGrid();            // boutons
-        initKeyBindings();     // clavier
-        updateView();          // affichage
+        if (model.isGameOver()) {
+            infoLabel.setText("GAME OVER");
+            return;
+        }
+
+        MoveResult res = model.move(dir);
+        if (!res.moved) return;
+
+        model.spawnOnBorder(dir);
+        updateView();
     }
 
-    
+    // ===== AFFICHAGE =====
+    private void updateView() {
+        int[][] grid = model.getGrid();
+        movesLabel.setText("Coups : " + model.getMovesCount());
+
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 4; c++) {
+                int v = grid[r][c];
+                JButton btn = cells[r][c];
+                btn.setText(v == 0 ? "" : String.valueOf(v));
+                btn.setBackground(Color.LIGHT_GRAY);
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -164,7 +225,7 @@ public class ThreesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        // TODO add your handling code here:
+        resetGame() ; 
     }//GEN-LAST:event_resetButtonActionPerformed
 
     /**
@@ -191,93 +252,7 @@ public class ThreesFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new ThreesFrame().setVisible(true));
     }
-
-    private void initGrid() {
-        gridPanel.removeAll();
-
-        for (int r = 0; r < 4; r++) {
-            for (int c = 0; c < 4; c++) {
-                JButton btn = new JButton();
-                btn.setEnabled(false);
-                btn.setFont(new Font("Arial", Font.BOLD, 22));
-                btn.setPreferredSize(new Dimension(80, 80));
-                cells[r][c] = btn;
-                gridPanel.add(btn);
-            }
-        }
-    }
-
-    private void initKeyBindings() {
-
-        JComponent root = getRootPane();
-        InputMap im = root.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap am = root.getActionMap();
-
-        im.put(KeyStroke.getKeyStroke("UP"), "up");
-        im.put(KeyStroke.getKeyStroke("DOWN"), "down");
-        im.put(KeyStroke.getKeyStroke("LEFT"), "left");
-        im.put(KeyStroke.getKeyStroke("RIGHT"), "right");
-
-        am.put("up", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                play(Direction.UP);
-            }
-        });
-
-        am.put("down", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                play(Direction.DOWN);
-            }
-        });
-
-        am.put("left", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                play(Direction.LEFT);
-            }
-        });
-
-        am.put("right", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                play(Direction.RIGHT);
-            }
-        });
-    }
-
-    private void updateView() {
-
-        int[][] grid = model.getGrid();
-        movesLabel.setText("Coups : " + model.getMovesCount());
-
-        for (int r = 0; r < 4; r++) {
-            for (int c = 0; c < 4; c++) {
-
-                int v = grid[r][c];
-                JButton btn = cells[r][c];
-
-                btn.setText(v == 0 ? "" : String.valueOf(v));
-                btn.setBackground(getColor(v));
-            }
-        }
-    }
-
-        private void resetGame() {
-        model.reset();
-        infoLabel.setText("Nouvelle partie");
-        updateView();
-    }
-
-   
-        
     
-
-    
-
-    
-
-    
-
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel gridPanel;
     private javax.swing.JPanel helpLabel;
@@ -288,14 +263,3 @@ public class ThreesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
-
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(infoLabel)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(resetButton)
-                        .addComponent(movesLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
-                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(104, 104, 104))
