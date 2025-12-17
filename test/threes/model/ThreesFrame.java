@@ -72,16 +72,45 @@ public class ThreesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        gridPanel = new javax.swing.JPanel();
+        helpLabel = new javax.swing.JPanel();
+        texteHelp = new javax.swing.JLabel();
         topPanel = new javax.swing.JPanel();
-        resetButton = new javax.swing.JButton();
-        infoLabel = new javax.swing.JLabel();
         movesLabel = new javax.swing.JLabel();
+        infoLabel = new javax.swing.JLabel();
+        resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        gridPanel.setLayout(new java.awt.GridLayout(4, 4, 8, 8));
+
+        texteHelp.setText("Flèches = jouer | R = restart");
+
+        javax.swing.GroupLayout helpLabelLayout = new javax.swing.GroupLayout(helpLabel);
+        helpLabel.setLayout(helpLabelLayout);
+        helpLabelLayout.setHorizontalGroup(
+            helpLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(helpLabelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(texteHelp, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addGap(29, 29, 29))
+        );
+        helpLabelLayout.setVerticalGroup(
+            helpLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(helpLabelLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(texteHelp)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
         topPanel.setLayout(new java.awt.BorderLayout());
 
-        resetButton.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        movesLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        movesLabel.setText("Coups : 0");
+
+        infoLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        infoLabel.setText("Utilise les flèches");
+
         resetButton.setText("Recommencer");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,24 +118,44 @@ public class ThreesFrame extends javax.swing.JFrame {
             }
         });
 
-        infoLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        infoLabel.setText("Utilise les flèches");
-
-        movesLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        movesLabel.setText("Coups : 0");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(59, 59, 59))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146))))
             .addGroup(layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addComponent(gridPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(movesLabel)
+                .addGap(59, 59, 59)
+                .addComponent(infoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(resetButton))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(gridPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(infoLabel)
+                    .addComponent(movesLabel)
+                    .addComponent(resetButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -230,16 +279,13 @@ public class ThreesFrame extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-                .addGap(66, 66, 66)
-                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(infoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(movesLabel)
-                .addGap(26, 26, 26)
-                .addComponent(resetButton))
+    private javax.swing.JPanel gridPanel;
+    private javax.swing.JPanel helpLabel;
+    private javax.swing.JLabel infoLabel;
+    private javax.swing.JLabel movesLabel;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JLabel texteHelp;
+    private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
 
