@@ -256,8 +256,10 @@ public class ThreesFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ThreesFrame().setVisible(true));
-    }
+ java.awt.EventQueue.invokeLater(() -> {
+        new ThreesFrame().setVisible(true);
+    });
+}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel gridPanel;
