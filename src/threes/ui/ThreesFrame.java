@@ -44,6 +44,8 @@ public class ThreesFrame extends javax.swing.JFrame {
         infoLabel.setText("Nouvelle partie");
         updateView();
     }
+         
+         
           private void initGrid() {
         gridPanel.removeAll();
 
@@ -55,6 +57,9 @@ public class ThreesFrame extends javax.swing.JFrame {
                 btn.setPreferredSize(new Dimension(80, 80));
                 cells[r][c] = btn;
                 gridPanel.add(btn);
+                btn.setFocusPainted(false);
+btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
+
             }
         }
     }
@@ -121,21 +126,46 @@ public class ThreesFrame extends javax.swing.JFrame {
     }
 }
 
-
+    
     // ===== AFFICHAGE =====
-    private void updateView() {
-        int[][] grid = model.getGrid();
-        movesLabel.setText("Coups : " + model.getMovesCount());
+   private void updateView() {
+    int[][] grid = model.getGrid();
+    movesLabel.setText("Coups : " + model.getMovesCount());
 
-        for (int r = 0; r < 4; r++) {
-            for (int c = 0; c < 4; c++) {
-                int v = grid[r][c];
-                JButton btn = cells[r][c];
-                btn.setText(v == 0 ? "" : String.valueOf(v));
-                btn.setBackground(Color.LIGHT_GRAY);
-            }
+    for (int r = 0; r < 4; r++) {
+        for (int c = 0; c < 4; c++) {
+            int v = grid[r][c];
+            JButton btn = cells[r][c];
+
+            btn.setText(v == 0 ? "" : String.valueOf(v));
+            btn.setBackground(getColorForValue(v));
+
+            // meilleure lisibilité
+            btn.setForeground(v <= 2 ? Color.BLACK : Color.WHITE);
+            btn.setOpaque(true);
+            btn.setBorderPainted(false);
         }
     }
+}
+
+    
+    private Color getColorForValue(int v) {
+    switch (v) {
+        case 0:  return new Color(230, 230, 230); // vide
+        case 1:  return new Color(100, 149, 237); // bleu
+        case 2:  return new Color(220, 20, 60);   // rouge
+        case 3:  return new Color(255, 165, 0);   // orange
+        case 6:  return new Color(255, 140, 0);
+        case 12: return new Color(255, 215, 0);
+        case 24: return new Color(255, 193, 7);
+        case 48: return new Color(255, 111, 0);
+        case 96: return new Color(255, 87, 34);
+        case 192:return new Color(233, 30, 99);
+        case 384:return new Color(156, 39, 176);
+        default: return new Color(96, 125, 139); // gros nombres
+    }
+}
+
     
     private int[][] copyGrid(int[][] g) {
     int[][] cp = new int[4][4];
