@@ -137,16 +137,44 @@ btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
             int v = grid[r][c];
             JButton btn = cells[r][c];
 
-            btn.setText(v == 0 ? "" : String.valueOf(v));
-            btn.setBackground(getColorForValue(v));
+            if (v == 0) {
+                btn.setText("");
+                btn.setBackground(new Color(230, 230, 230));
+                continue;
+            }
 
-            // meilleure lisibilité
-            btn.setForeground(v <= 2 ? Color.BLACK : Color.BLACK);
+            Color base = getColorForValue(v);
+
+            btn.setText(String.valueOf(v));
+            btn.setBackground(base);
+
+            // le texte = même couleur, mais plus foncée
+            btn.setForeground(darker(base, 80));
+
+            btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
             btn.setOpaque(true);
             btn.setBorderPainted(false);
         }
     }
 }
+
+   
+   private Color darker(Color c, int factor) {
+    return new Color(
+        Math.max(c.getRed() - factor, 0),
+        Math.max(c.getGreen() - factor, 0),
+        Math.max(c.getBlue() - factor, 0)
+    );
+}
+
+private Color lighter(Color c, int factor) {
+    return new Color(
+        Math.min(c.getRed() + factor, 255),
+        Math.min(c.getGreen() + factor, 255),
+        Math.min(c.getBlue() + factor, 255)
+    );
+}
+
 
     
     private Color getColorForValue(int v) {
