@@ -181,9 +181,9 @@ private Color lighter(Color c, int factor) {
     switch (v) {
         case 0:  return new Color(230, 230, 230); // vide
         case 1:  return new Color(100, 149, 237); // bleu
-        case 2:  return new Color(220, 20, 60);   // rouge
+        case 2:  return new Color(15, 157, 88);    // VERT (6);   // rouge
         case 3:  return new Color(255, 165, 0);   // orange
-        case 6:  return new Color(255, 140, 0);
+        case 6:  return new Color(156, 39, 176);
         case 12: return new Color(255, 215, 0);
         case 24: return new Color(255, 193, 7);
         case 48: return new Color(255, 111, 0);
