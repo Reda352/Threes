@@ -206,7 +206,7 @@ private void flashCell(int r, int c) {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        gridPanel.setBackground(new java.awt.Color(0, 0, 204));
+        gridPanel.setBackground(new java.awt.Color(255, 255, 255));
         gridPanel.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 51)));
         gridPanel.setForeground(new java.awt.Color(255, 0, 0));
         gridPanel.setLayout(new java.awt.GridLayout(4, 4, 8, 8));
