@@ -102,9 +102,15 @@ btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
     // ===== JOUER =====
     private void play(Direction dir) {
     if (model.isGameOver()) {
-        infoLabel.setText("GAME OVER");
-        return;
-    }
+    infoLabel.setText("GAME OVER");
+    JOptionPane.showMessageDialog(
+        this,
+        "Partie terminée en " + model.getMovesCount() + " coups",
+        "Game Over",
+        JOptionPane.INFORMATION_MESSAGE
+    );
+    return;
+}
 
     int[][] before = copyGrid(model.getGrid());
 
