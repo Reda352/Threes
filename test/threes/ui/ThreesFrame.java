@@ -16,7 +16,7 @@ import threes.model.MoveResult;
 
 
 /**
- *
+ 
  * @author Titouan HETMANIAK
  */
 public class ThreesFrame extends javax.swing.JFrame {
