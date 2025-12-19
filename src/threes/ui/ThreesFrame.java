@@ -259,7 +259,6 @@ private void flashCell(int r, int c) {
         topPanel = new javax.swing.JPanel();
         movesLabel = new javax.swing.JLabel();
         infoLabel = new javax.swing.JLabel();
-        texteHelp = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -287,10 +286,6 @@ private void flashCell(int r, int c) {
 
         infoLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         infoLabel.setText("Utilise les flèches");
-
-        texteHelp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        texteHelp.setText("Flèches = jouer | R = restart");
-        texteHelp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         resetButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         resetButton.setText("Recommencer");
@@ -324,10 +319,7 @@ private void flashCell(int r, int c) {
                         .addContainerGap()
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(texteHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -341,9 +333,7 @@ private void flashCell(int r, int c) {
                     .addComponent(movesLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addComponent(texteHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -390,7 +380,6 @@ private void flashCell(int r, int c) {
     private javax.swing.JLabel infoLabel;
     private javax.swing.JLabel movesLabel;
     private javax.swing.JButton resetButton;
-    private javax.swing.JLabel texteHelp;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }

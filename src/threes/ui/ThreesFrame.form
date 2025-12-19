@@ -47,10 +47,6 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="helpLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="texteHelp" min="-2" pref="184" max="-2" attributes="0"/>
-                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -68,9 +64,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="topPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-              <Component id="texteHelp" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="57" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="helpLabel" min="-2" max="-2" attributes="0"/>
                   <Component id="resetButton" min="-2" pref="55" max="-2" attributes="0"/>
@@ -138,19 +132,6 @@
           <Font name="Segoe UI" size="16" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Utilise les fl&#xe8;ches"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="texteHelp">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="12" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Fl&#xe8;ches = jouer | R = restart"/>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder roundedCorners="true" thickness="2"/>
-          </Border>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="resetButton">
