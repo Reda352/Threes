@@ -98,20 +98,44 @@ btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
             }
         });
     }
+    private void showGameOverDialog() {
+    JDialog dialog = new JDialog(this, "Game Over", true);
+    dialog.setSize(300, 200);
+    dialog.setLayout(new BorderLayout());
+    dialog.setLocationRelativeTo(this);
+
+    JLabel title = new JLabel("GAME OVER", SwingConstants.CENTER);
+    title.setFont(new Font("Segoe UI", Font.BOLD, 22));
+    title.setForeground(new Color(229, 57, 53));
+
+    JLabel score = new JLabel(
+        "Coups joués : " + model.getMovesCount(),
+        SwingConstants.CENTER
+    );
+    score.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+    JButton replay = new JButton("Rejouer");
+    replay.addActionListener(e -> {
+        dialog.dispose();
+        resetGame();
+    });
+
+    JPanel center = new JPanel(new GridLayout(2, 1));
+    center.add(title);
+    center.add(score);
+
+    dialog.add(center, BorderLayout.CENTER);
+    dialog.add(replay, BorderLayout.SOUTH);
+
+    dialog.setVisible(true);
+}
 
     // ===== JOUER =====
     private void play(Direction dir) {
-    if (model.isGameOver()) {
-    infoLabel.setText("GAME OVER");
-    JOptionPane.showMessageDialog(
-        this,
-        "Partie terminée en " + model.getMovesCount() + " coups",
-        "Game Over",
-        JOptionPane.INFORMATION_MESSAGE
-    );
+   if (model.isGameOver()) {
+    showGameOverDialog();
     return;
 }
-
     int[][] before = copyGrid(model.getGrid());
 
     MoveResult res = model.move(dir);
