@@ -96,18 +96,31 @@ public class ThreesFrame extends javax.swing.JFrame {
 
     // ===== JOUER =====
     private void play(Direction dir) {
-
-        if (model.isGameOver()) {
-            infoLabel.setText("GAME OVER");
-            return;
-        }
-
-        MoveResult res = model.move(dir);
-        if (!res.moved) return;
-
-        model.spawnOnBorder(dir);
-        updateView();
+    if (model.isGameOver()) {
+        infoLabel.setText("GAME OVER");
+        return;
     }
+
+    int[][] before = copyGrid(model.getGrid());
+
+    MoveResult res = model.move(dir);
+    if (!res.moved) return;
+
+    model.spawnOnBorder(dir);
+
+    int[][] after = model.getGrid();
+    updateView();
+
+    // surbrillance des cases qui ont changé
+    for (int r = 0; r < 4; r++) {
+        for (int c = 0; c < 4; c++) {
+            if (before[r][c] != after[r][c]) {
+                flashCell(r, c);
+            }
+        }
+    }
+}
+
 
     // ===== AFFICHAGE =====
     private void updateView() {
@@ -123,6 +136,26 @@ public class ThreesFrame extends javax.swing.JFrame {
             }
         }
     }
+    
+    private int[][] copyGrid(int[][] g) {
+    int[][] cp = new int[4][4];
+    for (int r = 0; r < 4; r++) {
+        System.arraycopy(g[r], 0, cp[r], 0, 4);
+    }
+    return cp;
+}
+
+private void flashCell(int r, int c) {
+    JButton b = cells[r][c];
+    Color old = b.getBackground();
+    b.setBackground(new Color(255, 235, 59)); // jaune
+
+    new javax.swing.Timer(120, e -> {
+        b.setBackground(old);
+        ((javax.swing.Timer) e.getSource()).stop();
+    }).start();
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,10 +168,10 @@ public class ThreesFrame extends javax.swing.JFrame {
 
         gridPanel = new javax.swing.JPanel();
         helpLabel = new javax.swing.JPanel();
-        texteHelp = new javax.swing.JLabel();
         topPanel = new javax.swing.JPanel();
         movesLabel = new javax.swing.JLabel();
         infoLabel = new javax.swing.JLabel();
+        texteHelp = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,23 +181,15 @@ public class ThreesFrame extends javax.swing.JFrame {
         gridPanel.setForeground(new java.awt.Color(255, 0, 0));
         gridPanel.setLayout(new java.awt.GridLayout(4, 4, 8, 8));
 
-        texteHelp.setText("Flèches = jouer | R = restart");
-
         javax.swing.GroupLayout helpLabelLayout = new javax.swing.GroupLayout(helpLabel);
         helpLabel.setLayout(helpLabelLayout);
         helpLabelLayout.setHorizontalGroup(
             helpLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(helpLabelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(texteHelp, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                .addGap(29, 29, 29))
+            .addGap(0, 367, Short.MAX_VALUE)
         );
         helpLabelLayout.setVerticalGroup(
             helpLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(helpLabelLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(texteHelp)
-                .addContainerGap(42, Short.MAX_VALUE))
+            .addGap(0, 172, Short.MAX_VALUE)
         );
 
         topPanel.setLayout(new java.awt.BorderLayout());
@@ -175,7 +200,13 @@ public class ThreesFrame extends javax.swing.JFrame {
         infoLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         infoLabel.setText("Utilise les flèches");
 
+        texteHelp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        texteHelp.setText("Flèches = jouer | R = restart");
+        texteHelp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+
+        resetButton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         resetButton.setText("Recommencer");
+        resetButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resetButtonActionPerformed(evt);
@@ -187,27 +218,29 @@ public class ThreesFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(gridPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(movesLabel)
                 .addGap(59, 59, 59)
                 .addComponent(infoLabel)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(111, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(146, 146, 146))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(146, 146, 146))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(resetButton)
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(gridPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(texteHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,10 +253,12 @@ public class ThreesFrame extends javax.swing.JFrame {
                     .addComponent(movesLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addComponent(resetButton)
-                .addGap(18, 18, 18)
-                .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(texteHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(helpLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
