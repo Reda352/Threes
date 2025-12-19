@@ -100,19 +100,19 @@ btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
     }
     private void showGameOverDialog() {
     JDialog dialog = new JDialog(this, "Game Over", true);
-    dialog.setSize(300, 200);
+    dialog.setSize(500, 400);
     dialog.setLayout(new BorderLayout());
     dialog.setLocationRelativeTo(this);
 
-    JLabel title = new JLabel("GAME OVER", SwingConstants.CENTER);
-    title.setFont(new Font("Segoe UI", Font.BOLD, 22));
+    JLabel title = new JLabel("GAME OVER (t'es nul !)", SwingConstants.CENTER);
+    title.setFont(new Font("Segoe UI", Font.BOLD, 40));
     title.setForeground(new Color(229, 57, 53));
 
     JLabel score = new JLabel(
         "Coups joués : " + model.getMovesCount(),
         SwingConstants.CENTER
     );
-    score.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+    score.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 
     JButton replay = new JButton("Rejouer");
     replay.addActionListener(e -> {
