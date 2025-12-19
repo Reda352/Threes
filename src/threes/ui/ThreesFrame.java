@@ -141,7 +141,7 @@ btn.setFont(new Font("Segoe UI", Font.BOLD, 22));
             btn.setBackground(getColorForValue(v));
 
             // meilleure lisibilité
-            btn.setForeground(v <= 2 ? Color.BLACK : Color.WHITE);
+            btn.setForeground(v <= 2 ? Color.BLACK : Color.BLACK);
             btn.setOpaque(true);
             btn.setBorderPainted(false);
         }
